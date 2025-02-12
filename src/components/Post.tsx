@@ -2,8 +2,34 @@ import React from "react";
 import Image from "@/components/Image";
 import PostInfo from "./PostInfo";
 import PostInteraction from "./PostInteraction";
+import { imagekit } from "@/utils";
+import Video from "./Video";
 
-const Post = () => {
+interface FileDetailsResponse {
+  width: number;
+  height: number;
+  filePath: string;
+  url: string;
+  fileType: string;
+  customMetadata?: { sensitive: boolean };
+}
+
+const Post = async () => {
+  const getFileDetails = async (
+    fileId: string
+  ): Promise<FileDetailsResponse> => {
+    return new Promise((resolve, reject) => {
+      imagekit.getFileDetails(fileId, function (error, result) {
+        if (error) reject(error);
+        else resolve(result as FileDetailsResponse);
+      });
+    });
+  };
+
+  const fileDetails = await getFileDetails("67ac8ea0432c47641682bcfe");
+
+  console.log(fileDetails);
+
   return (
     <div className="p-4 border-y-[1px] border-borderGray">
       {/* post type */}
@@ -49,12 +75,30 @@ const Post = () => {
             error repellat nisi blanditiis illo ab dolores assumenda temporibus
             qui magnam nostrum fugit officia, vitae nam nobis rerum voluptate.
           </p>
-          <Image
+          {/* <Image
             path="general/post.jpeg"
             width={600}
             height={600}
             alt="post-image"
-          />
+          /> */}
+          {fileDetails && fileDetails.fileType == "image" ? (
+            <Image
+              path={fileDetails.filePath}
+              alt=""
+              width={fileDetails.width}
+              height={fileDetails.height}
+              className={`${
+                fileDetails.customMetadata?.sensitive ? "blur-lg" : ""
+              }`}
+            />
+          ) : (
+            <Video
+              path={fileDetails.filePath}
+              className={`${
+                fileDetails.customMetadata?.sensitive ? "blur-lg" : ""
+              }`}
+            />
+          )}
           <PostInteraction />
         </div>
       </div>

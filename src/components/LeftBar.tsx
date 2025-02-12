@@ -96,7 +96,7 @@ const LeftBar = () => {
         {/* button */}
         <Link
           href={"/"}
-          className="bg-white text-black rounded-full font-bold w-12 h-12 flex items-center justify-center xl:hidden">
+          className="bg-white text-black rounded-full mb-4 font-bold w-12 h-12 flex items-center justify-center xl:hidden">
           <Image
             alt="new-post"
             path={"icons/post.svg"}
@@ -106,13 +106,13 @@ const LeftBar = () => {
         </Link>
         <Link
           href={"/"}
-          className="hidden  xl:block bg-white text-black font-semibold rounded-full py-2 px-20">
+          className="hidden  xl:block bg-white  text-black font-semibold rounded-full py-2 px-20">
           Post
         </Link>
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 relative rounded-full overflow-hidden">
+          <div className="w-10 h-10 relative mb-1 rounded-full overflow-hidden">
             <Image
               path={"/general/avatar.png"}
               alt="lama dev"
