@@ -4,6 +4,7 @@ import PostInfo from "./PostInfo";
 import PostInteraction from "./PostInteraction";
 import { imagekit } from "@/utils";
 import Video from "./Video";
+import Link from "next/link";
 
 interface FileDetailsResponse {
   width: number;
@@ -14,7 +15,7 @@ interface FileDetailsResponse {
   customMetadata?: { sensitive: boolean };
 }
 
-const Post = async () => {
+const Post = async ({ type }: { type?: "status" | "comment" }) => {
   const getFileDetails = async (
     fileId: string
   ): Promise<FileDetailsResponse> => {
@@ -47,34 +48,64 @@ const Post = async () => {
         <span>Lama Dev Re-posted</span>
       </div>
       {/* post content */}
-      <div className="flex gap-4">
+      {/* <div className="flex gap-4"> */}
+      <div className={`flex gap-4 ${type == "status" && "flex-col"}`}>
         {/* avatar */}
-        <div className="relative w-10 h-10 overflow-hidden rounded-full">
+        {/* AVATAR */}
+        <div
+          className={`${
+            type === "status" && "hidden"
+          } relative w-10 h-10 rounded-full overflow-hidden`}>
           <Image
             path="general/avatar.png"
+            alt=""
             width={100}
             height={100}
-            alt="post-image"
             tr={true}
           />
         </div>
-        {/* content */}
+        {/* CONTENT */}
         <div className="flex-1 flex flex-col gap-2">
-          {/* top */}
-          <div className="flex items-center justify-between gap-2 ">
-            <div className="flex items-center flex-wrap gap-2">
-              <h1 className="text-md font-bold">Lama Dev</h1>
-              <span className="text-textGray">@lamaWebDev</span>
-              <span className="text-textGray">1 Day Ago</span>
-            </div>
+          {/* TOP */}
+          <div className="w-full flex justify-between">
+            <Link href={`/lamaWebDev`} className="flex gap-4">
+              <div
+                className={`${
+                  type !== "status" && "hidden"
+                } relative w-10 h-10 rounded-full overflow-hidden`}>
+                <Image
+                  path="general/avatar.png"
+                  alt=""
+                  width={100}
+                  height={100}
+                  tr={true}
+                />
+              </div>
+              <div
+                className={`flex items-center gap-2 flex-wrap ${
+                  type === "status" && "flex-col gap-0 !items-start"
+                }`}>
+                <h1 className="text-md font-bold">Lama Dev</h1>
+                <span
+                  className={`text-textGray ${type === "status" && "text-sm"}`}>
+                  @lamaWebDev
+                </span>
+                {type !== "status" && (
+                  <span className="text-textGray">1 day ago</span>
+                )}
+              </div>
+            </Link>
             <PostInfo />
           </div>
           {/* text-media content */}
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas hic ex
-            error repellat nisi blanditiis illo ab dolores assumenda temporibus
-            qui magnam nostrum fugit officia, vitae nam nobis rerum voluptate.
-          </p>
+          <Link href={"/test/status/123"}>
+            <p className={`${type == "status" && "text-lg"}`}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas hic
+              ex error repellat nisi blanditiis illo ab dolores assumenda
+              temporibus qui magnam nostrum fugit officia, vitae nam nobis rerum
+              voluptate.
+            </p>
+          </Link>
           {/* <Image
             path="general/post.jpeg"
             width={600}
@@ -98,6 +129,9 @@ const Post = async () => {
                 fileDetails.customMetadata?.sensitive ? "blur-lg" : ""
               }`}
             />
+          )}
+          {type == "status" && (
+            <span className="text-textGray">8:41 PM・Dec 5, 2024</span>
           )}
           <PostInteraction />
         </div>
