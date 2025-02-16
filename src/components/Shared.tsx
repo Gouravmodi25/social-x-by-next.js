@@ -23,8 +23,6 @@ const Shared = () => {
       setMedia(e.target.files[0]);
     }
   };
-  console.log(media);
-  console.log(previewUrl);
 
   return (
     <form

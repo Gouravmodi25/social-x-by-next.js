@@ -105,7 +105,7 @@ const LeftBar = () => {
         </Link>
       </div>
       {/* USER */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 relative rounded-full overflow-hidden">
             <Image
@@ -116,7 +116,7 @@ const LeftBar = () => {
               tr={true}
             />
           </div>
-          <div className="hidden xxl:flex flex-col">
+          <div className="hidden xxl:flex flex-col ">
             <span className="font-bold">Lama Dev</span>
             <span className="text-sm text-textGray">@lamaWebDev</span>
           </div>
